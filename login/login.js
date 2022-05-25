@@ -11,7 +11,6 @@ const telepresenceLogin = async function(){
 
     const ambassadorClient = new AmbassadorClient(apiKey);
     const keyValid = await ambassadorClient.isApiKeyValid();
-    core.notice("validation result " + keyValid);
     if (!keyValid) {
         core.setFailed('telepresence_api_key is expired or invalid');
         return;
@@ -19,6 +18,7 @@ const telepresenceLogin = async function(){
 
     try {
         await exec.exec('telepresence', ['login', '--apikey', apiKey]);
+        core.saveState('telepresence_session_created', true);
     } catch (error) {
         core.setFailed(error.message);
     }
