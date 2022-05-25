@@ -30,4 +30,5 @@ class AmbassadorClient {
         );
     }
 }
-module.exports = { AmbassadorClient }
+
+module.exports = AmbassadorClient;
