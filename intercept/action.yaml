@@ -33,6 +33,10 @@ inputs:
     description: This flag will default to the ingress-host value.
     required: false
     default: ambassador.ambassador
+  post_intercept_delay:
+    description: A delay in seconds to wait after stablishing the intercept connection
+    required: false
+    default: 0
 runs:
   using: 'node16'
   main: 'intercept.js'
