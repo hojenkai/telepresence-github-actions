@@ -22,17 +22,19 @@ const telepresenceIntercept = async function(){
         if (ingress_tls)
             parameters.push('--ingress-tls')
 
-        await exec.exec('telepresence', parameters);
 
+        let delay = 0;
         if (post_intercept_delay) {
             try {
                 delay = parseInt(post_intercept_delay);
-                if ( delay > 0 ) {
-                    await exec.exec('sleep', [delay]);
-                }
             } catch(err) {
                 core.notice('Error parsing post_intercept_delay. ' + err.message);
             }
+        }
+
+        await exec.exec('telepresence', parameters);
+        if ( delay > 0 ) {
+            await exec.exec('sleep', [delay]);
         }
     } catch (error) {
         core.setFailed(error.message);
