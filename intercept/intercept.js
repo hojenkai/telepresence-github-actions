@@ -31,7 +31,7 @@ const telepresenceIntercept = async function(){
                     await exec.exec('sleep', [delay]);
                 }
             } catch(err) {
-                core.error('Error parsing post_intercept_delay. ' + err.message);
+                core.notice('Error parsing post_intercept_delay. ' + err.message);
             }
         }
     } catch (error) {
