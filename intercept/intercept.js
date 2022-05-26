@@ -33,6 +33,8 @@ const telepresenceIntercept = async function(){
         }
 
         await exec.exec('telepresence', parameters);
+        core.saveState('telepresence_service_intercepted', true);
+
         if ( delay > 0 ) {
             await exec.exec('sleep', [delay]);
         }
