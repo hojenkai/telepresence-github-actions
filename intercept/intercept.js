@@ -28,7 +28,7 @@ const telepresenceIntercept = async function(){
             try {
                 delay = parseInt(post_intercept_delay);
             } catch(err) {
-                core.notice('Error parsing post_intercept_delay. ' + err.message);
+                core.warning('Error parsing post_intercept_delay. ' + err.message);
             }
         }
 
