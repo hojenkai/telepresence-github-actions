@@ -28,10 +28,8 @@ const telepresenceIntercept = async function(){
 
         if (print_logs) {
             await exec.exec('telepresence', ['gather-logs']);
-            await exec.exec('unzip', ['telepresence_logs.zip']);
-            await exec.exec('cat', ['cli.log']);
-            await exec.exec('cat', ['connector.log']);
-            await exec.exec('cat', ['daemon.log']);
+            await exec.exec('unzip', ['telepresence_logs.zip', '-d', 'intercept-logs']);
+            await exec.exec('cat', ['intercept-logs/*.log']);
         }
     } catch (error) {
         core.setFailed(error.message);
