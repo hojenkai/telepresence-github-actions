@@ -1,3 +1,4 @@
+const artifact = require('@actions/artifact');
 const core = require('@actions/core')
 const exec = require('@actions/exec');
 
@@ -29,7 +30,11 @@ const telepresenceIntercept = async function(){
         if (print_logs) {
             await exec.exec('telepresence', ['gather-logs']);
             await exec.exec('unzip', ['telepresence_logs.zip', '-d', 'intercept-logs']);
-            await exec.exec('cat', ['intercept-logs/*.log']);
+            await exec.exec('cat', ['intercept-logs/cli.log']);
+            await exec.exec('cat', ['intercept-logs/connector.log']);
+            await exec.exec('cat', ['intercept-logs/daemon.log']);
+            const artifactClient = artifact.create();
+            await artifactClient.uploadArtifact('telepresence-logs', ['telepresence_logs.zip'], '.', {continueOnError: true})
         }
     } catch (error) {
         core.setFailed(error.message);
