@@ -12,6 +12,7 @@ const telepresenceIntercept = async function(){
         const ingress_port = core.getInput('ingress_port');
         const ingress_tls = core.getInput('ingress_tls');
         const ingress_l5 = core.getInput('ingress_l5');
+        const print_logs = core.getInput('print_logs');
         const parameters = ['intercept', service_name, '--port', service_port, '--ingress-host', ingress_host,
             '--ingress-port', ingress_port, '--ingress-l5', ingress_l5, '-n', namespace, `--http-header=${http_header}`];
         if (env_file && env_file.length !== 0){
@@ -24,6 +25,14 @@ const telepresenceIntercept = async function(){
 
         await exec.exec('telepresence', parameters);
         core.saveState('telepresence_service_intercepted', true);
+
+        if (print_logs) {
+            await exec.exec('telepresence', ['gather-logs']);
+            await exec.exec('unzip', ['telepresence_logs.zip']);
+            await exec.exec('cat', ['cli.log']);
+            await exec.exec('cat', ['connector.log']);
+            await exec.exec('cat', ['daemon.log']);
+        }
     } catch (error) {
         core.setFailed(error.message);
     }
