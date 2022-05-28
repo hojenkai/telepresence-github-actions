@@ -25,4 +25,4 @@ const telepresenceLogin = async function(){
 }
 
 
-telepresenceLogin();
+module.exports = telepresenceLogin;
