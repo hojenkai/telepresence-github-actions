@@ -1,4 +1,3 @@
-const fs = require('fs');
 const core = require('@actions/core')
 const exec = require('@actions/exec');
 const io = require('@actions/io');
@@ -29,19 +28,7 @@ const createClientConfigFile = async function(values_file_path) {
         throw new Error('client_values_file values file must be a yaml file.');
     }
 
-    try {
-        const stats = await fs.promises.stat(values_file_path);
-        if (!stats.isFile()) {
-            throw new Error('client_values_file must be a file.');
-        }
-
-        await io.cp(values_file_path, '$HOME/.config/telepresence/config.yml');
-    } catch(err) {
-        if (err.code === 'ENOENT') {
-            throw new Error(`File ${values_file_path} doesn't exists.`)
-        }
-        throw err;
-    }
+    await io.cp(values_file_path, '$HOME/.config/telepresence/config.yml');
 }
 
 telepresenceConnect();
