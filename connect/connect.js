@@ -29,7 +29,7 @@ const createClientConfigFile = async function(values_file_path) {
     }
 
     await exec.exec('cat', [values_file_path]);
-    await exec.exec('cp', [values_file_path, '~/.config/telepresence/config.yml']);
+    await exec.exec('cp', [values_file_path, '/etc/xdg/telepresence/config.yml']);
     // await io.cp(values_file_path, '$HOME/.config/telepresence/config.yml');
 }
 
