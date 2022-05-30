@@ -4,7 +4,12 @@ const exec = require('@actions/exec');
 const io = require('@actions/io');
 
 const telepresenceConnect = async function(){
-    await createClientConfigFile(core.getInput('client_values_file'));
+    try {
+        await createClientConfigFile(core.getInput('client_values_file'));
+    } catch(err) {
+        core.setFailed(err);
+        return;
+    }
 
     await createClientConfigFile();
 
