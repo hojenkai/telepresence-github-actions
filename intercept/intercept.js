@@ -26,8 +26,10 @@ const telepresenceIntercept = async function(){
 
         const options = {};
         options.listeners = {
-            stdout: (data) => {
-                print(data);
+            stdline: (line) => {
+                if ( line.indexOf('Launching browser authentication flow') > 0 ) {
+                    core.warning('Ambassador authentication not working');
+                }
             }
         };
 
