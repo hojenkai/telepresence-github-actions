@@ -15,4 +15,4 @@ const telepresenceLogout = async function(){
     }
 }
 
-module.exports = telepresenceLogout;
+telepresenceLogout();
