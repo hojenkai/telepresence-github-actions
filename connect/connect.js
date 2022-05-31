@@ -10,8 +10,6 @@ const telepresenceConnect = async function(){
         return;
     }
 
-    await createClientConfigFile();
-
     try {
         await exec.exec('telepresence', ['connect']);
         core.saveState("telepresence_connected", true)
