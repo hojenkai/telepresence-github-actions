@@ -27,6 +27,7 @@ const telepresenceIntercept = async function(){
         await exec.exec('telepresence', parameters);
         core.saveState('telepresence_service_intercepted', true);
 
+        core.info('print logs flag ' + print_logs)
         if (print_logs) {
             await exec.exec('telepresence', ['gather-logs']);
             await exec.exec('unzip', ['telepresence_logs.zip', '-d', 'intercept-logs']);
