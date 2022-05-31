@@ -24,7 +24,14 @@ const telepresenceIntercept = async function(){
             parameters.push('--ingress-tls')
 
 
-        await exec.exec('telepresence', parameters);
+        const options = {};
+        options.listeners = {
+            stdout: (data) => {
+                print(data);
+            }
+        };
+
+        await exec.exec('telepresence', parameters, options);
         core.saveState('telepresence_service_intercepted', true);
 
         if (print_logs) {

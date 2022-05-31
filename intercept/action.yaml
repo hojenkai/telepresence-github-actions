@@ -40,4 +40,3 @@ runs:
   using: 'node16'
   main: 'intercept.js'
   post: 'leave.js'
-

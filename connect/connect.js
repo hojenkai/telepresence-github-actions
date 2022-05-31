@@ -29,7 +29,6 @@ const createClientConfigFile = async function(values_file_path) {
     const telepresenceConfigDir = '~/.config/telepresence/';
     await io.mkdirP(telepresenceConfigDir);
     await exec.exec('cp', [values_file_path, telepresenceConfigDir + 'config.yml']);
-
 }
 
 telepresenceConnect();
