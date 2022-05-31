@@ -6,5 +6,5 @@ inputs:
     required: false
 runs:
   using: 'node16'
-  main: 'connect.js'
-  post: 'disconnect.js'
+  main: 'dist/connect.js'
+  post: 'dist/disconnect.js'
