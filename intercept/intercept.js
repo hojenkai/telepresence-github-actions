@@ -24,16 +24,7 @@ const telepresenceIntercept = async function(){
             parameters.push('--ingress-tls')
 
 
-        const options = {};
-        options.listeners = {
-            stdline: (line) => {
-                if ( line.indexOf('Launching browser authentication flow') > 0 ) {
-                    core.warning('Ambassador authentication not working');
-                }
-            }
-        };
-
-        await exec.exec('telepresence', parameters, options);
+        await exec.exec('telepresence', parameters);
         core.saveState('telepresence_service_intercepted', true);
 
         if (print_logs) {
