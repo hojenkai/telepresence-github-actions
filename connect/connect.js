@@ -26,8 +26,10 @@ const createClientConfigFile = async function(values_file_path) {
         throw new Error('client_values_file values file must be a yaml file.');
     }
 
-    await io.mkdirP('~/.config/telepresence/');
-    await exec.exec('cp', [values_file_path, '~/.config/telepresence/config.yml']);
+    const telepresenceConfigDir = '~/.config/telepresence/';
+    await io.mkdirP(telepresenceConfigDir);
+    await exec.exec('cp', [values_file_path, telepresenceConfigDir + 'config.yml']);
+
 }
 
 telepresenceConnect();
