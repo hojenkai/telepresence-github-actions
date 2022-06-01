@@ -6,6 +6,15 @@ const telepresenceConnect = async function(){
     const isConfigured = await configure.getConfiguration();
     if(!isConfigured)
         return;
+
+    // Create telepresence configuration file
+    try {
+        await createClientConfigFile(core.getInput('client_values_file'));
+    } catch(err) {
+        core.setFailed(err);
+        return;
+    }
+
     try {
         await exec.exec('telepresence', ['connect']);
         core.saveState("telepresence_connected", true)

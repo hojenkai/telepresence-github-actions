@@ -31,6 +31,19 @@ exports.getConfiguration = async () => {
     return true;
 };
 
+exports.createClientConfigFile = async function(values_file_path) {
+    if (!values_file_path) {
+        return;
+    }
+    if (!values_file_path.endsWith('.yaml')  && !values_file_path.endsWith('.yml')) {
+        throw new Error('client_values_file values file must be a yaml file.');
+    }
+
+    const telepresenceConfigDir = this.getTelepresenceConfigPath();
+    await io.mkdirP(telepresenceConfigDir);
+    await exec.exec('cp', [values_file_path, telepresenceConfigDir + 'config.yml']);
+}
+
 exports.TELEPRESENCE_ID_STATE = 'telepresence-id-state';
 exports.TELEPRESENCE_ID_SAVES = 'telepresence-saves';
 exports.TELEPRESENCE_ID_SAVED = 'telepresence-saved';
