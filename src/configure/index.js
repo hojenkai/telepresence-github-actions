@@ -42,7 +42,7 @@ exports.createClientConfigFile = async function(values_file_path) {
 
     const telepresenceConfigDir = this.getTelepresenceConfigPath();
     await io.mkdirP(telepresenceConfigDir);
-    await exec.exec('cp', [values_file_path, telepresenceConfigDir + 'config.yml']);
+    await exec.exec('cp', [values_file_path, telepresenceConfigDir + '/config.yml']);
 }
 
 exports.TELEPRESENCE_ID_STATE = 'telepresence-id-state';
