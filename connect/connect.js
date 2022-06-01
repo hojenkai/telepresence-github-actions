@@ -9,7 +9,7 @@ const telepresenceConnect = async function(){
 
     // Create telepresence configuration file
     try {
-        await createClientConfigFile(core.getInput('client_values_file'));
+        await configure.createClientConfigFile(core.getInput('client_values_file'));
     } catch(err) {
         core.setFailed(err);
         return;
