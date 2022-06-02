@@ -2,6 +2,8 @@ const core = require('@actions/core');
 const exec = require('@actions/exec');
 const io = require('@actions/io');
 const cache = require('@actions/cache');
+const fs = require('fs');
+
 
 exports.getTelepresenceConfigPath = () => {
     switch (process.platform) {
@@ -16,10 +18,11 @@ exports.getTelepresenceConfigPath = () => {
 };
 
 exports.getConfiguration = async () => {
+    const telepresenceCacheKey = core.getState('TELEPRESENCE_CACHE_KEY');
     const path = this.getTelepresenceConfigPath();
     try {
         await io.mkdirP(path);
-        const cacheid = await cache.restoreCache([path], this.TELEPRESENCE_CACHE_KEY,)
+        const cacheid = await cache.restoreCache([path], telepresenceCacheKey,)
         if (!cacheid){
             core.setFailed('Unable to find a telepresence install id stored');
             return false;
@@ -34,22 +37,53 @@ exports.getConfiguration = async () => {
 
 /**
  * Copies the given client configuration file to the user's Telepresence configuration directory
- * @param telepresence_config_file the path to the Telepresence client configuration file
  */
-exports.createClientConfigFile = async function(telepresence_config_file) {
-    if (!telepresence_config_file) {
+exports.createClientConfigFile = async function() {
+    try {
+        const fileExists = await fileExists(this.TELEPRESENCE_CONFIG_FILE_PATH);
+    } catch(err) {
+        core.warning('Error accessing telepresence config file. ' + err);
         return;
     }
-    if (!telepresence_config_file.endsWith('.yaml')  && !telepresence_config_file.endsWith('.yml')) {
-        throw new Error('client_values_file values file must be a yaml file.');
+    if ( !fileExists) {
+        return;
     }
 
     const telepresenceConfigDir = this.getTelepresenceConfigPath();
-    await io.mkdirP(telepresenceConfigDir);
-    await exec.exec('cp', [telepresence_config_file, telepresenceConfigDir + '/config.yml']);
+    await exec.exec('cp', [this.TELEPRESENCE_CONFIG_FILE_PATH, telepresenceConfigDir + '/config.yml']);
+}
+
+exports.checksumConfigFile = function (algorithm) {
+  return new Promise(function (resolve, reject) {
+    let fs = require('fs');
+    let crypto = require('crypto');
+
+    let hash = crypto.createHash(algorithm).setEncoding('hex');
+    fs.createReadStream(this.TELEPRESENCE_CONFIG_FILE_PATH)
+      .once('error', reject)
+      .pipe(hash)
+      .once('finish', function () {
+        resolve(hash.read());
+      });
+  });
+}
+
+const fileExists = async function(filePath) {
+    try {
+        const stats = await fs.promises.stat(filePath);
+        if (!stats.isFile()) {
+            throw new Error('client_values_file must be a file.');
+        }
+        return true;
+    } catch(err) {
+        if (err.code === 'ENOENT') {
+            return false;
+        }
+        throw err;
+    }
 }
 
 exports.TELEPRESENCE_ID_STATE = 'telepresence-id-state';
 exports.TELEPRESENCE_ID_SAVES = 'telepresence-saves';
 exports.TELEPRESENCE_ID_SAVED = 'telepresence-saved';
-exports.TELEPRESENCE_CACHE_KEY = 'telepresence_cache_key';
+exports.TELEPRESENCE_CONFIG_FILE_PATH = '../telepresence-config/config.yaml'

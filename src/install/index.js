@@ -2,6 +2,8 @@ const core = require('@actions/core');
 const toolCache = require('@actions/tool-cache');
 const cache = require('@actions/cache');
 const exec = require('@actions/exec');
+const configure = require('../../src/configure');
+const fs = require('fs');
 
 const TP_INSTALL_CACHE_ID = 'telepresence-install-id';
 
@@ -37,6 +39,16 @@ const unixInstall = async  (version) => {
 };
 
 exports.telepresenceInstall = async () => {
+    let configFileSha = '00000';
+    try {
+        configFileSha = await configure.checksumConfigFile('sha1');
+    } catch(err) {
+        core.info('No telepresence configuration file found.');
+    }
+    const telepresenceCacheKey = `TELEPRESENCE-${version}-${configFileSha}`;
+    core.saveState('TELEPRESENCE_CACHE_KEY', telepresenceCacheKey);
+
+
     try {
         const version = core.getInput('version');
         switch (process.platform) {

@@ -10,20 +10,22 @@ const telepresenceConfiguring = async function () {
     if(!isInstalled)
         return;
 
+    const telepresenceCacheKey = core.getState('TELEPRESENCE_CACHE_KEY');
+
     const path = configure.getTelepresenceConfigPath();
     const telepresenceConfigDir = [path];
 
     // Create Telepresence config dir and try to restore cached files
     try {
         await io.mkdirP(path);
-        await cache.restoreCache(telepresenceConfigDir, configure.TELEPRESENCE_CACHE_KEY);
+        await cache.restoreCache(telepresenceConfigDir, telepresenceCacheKey);
     } catch (error) {
         core.warning(`Unable to find the telepresence id: ${error}`);
     }
 
     // Create telepresence configuration file if provided
     try {
-        await configure.createClientConfigFile(core.getInput('telepresence_config_file'));
+        await configure.createClientConfigFile();
     } catch(err) {
         core.setFailed(err);
         return;
@@ -36,7 +38,7 @@ const telepresenceConfiguring = async function () {
         return;
     }
     try {
-        const cacheKey = await cache.saveCache(telepresenceConfigDir, configure.TELEPRESENCE_CACHE_KEY);
+        const cacheKey = await cache.saveCache(telepresenceConfigDir, telepresenceCacheKey);
         if (!cacheKey)
             core.setFailed('Unable to save the telepresence key cache');
     } catch (error) {
