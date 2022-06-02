@@ -11,6 +11,7 @@ const telepresenceConfiguring = async function () {
         return;
 
     const telepresenceCacheKey = core.getState('TELEPRESENCE_CACHE_KEY');
+    core.info('from action ' + telepresenceCacheKey)
 
     const path = configure.getTelepresenceConfigPath();
     const telepresenceConfigDir = [path];

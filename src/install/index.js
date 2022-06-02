@@ -47,6 +47,7 @@ exports.telepresenceInstall = async () => {
         core.info('No telepresence configuration file found.');
     }
     const telepresenceCacheKey = `TELEPRESENCE-${version}-${configFileSha}`;
+    core.info('generated key' + telepresenceCacheKey)
     core.saveState('TELEPRESENCE_CACHE_KEY', telepresenceCacheKey);
 
 

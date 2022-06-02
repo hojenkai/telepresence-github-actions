@@ -39,8 +39,9 @@ exports.getConfiguration = async () => {
  * Copies the given client configuration file to the user's Telepresence configuration directory
  */
 exports.createClientConfigFile = async function() {
+    let fileExists = false;
     try {
-        const fileExists = await fileExists(this.TELEPRESENCE_CONFIG_FILE_PATH);
+        fileExists = await fileExists(this.TELEPRESENCE_CONFIG_FILE_PATH);
     } catch(err) {
         core.warning('Error accessing telepresence config file. ' + err);
         return;
