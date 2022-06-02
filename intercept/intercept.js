@@ -37,6 +37,7 @@ const telepresenceIntercept = async function(){
             await exec.exec('cat', ['intercept-logs/cli.log']);
             await exec.exec('cat', ['intercept-logs/connector.log']);
             await exec.exec('cat', ['intercept-logs/daemon.log']);
+            await exec.exec('cat', ['/home/runner/.config/telepresence/config.yml']);
             const artifactClient = artifact.create();
             await artifactClient.uploadArtifact('telepresence-logs', ['telepresence_logs.zip'], '.', {continueOnError: true})
         }
