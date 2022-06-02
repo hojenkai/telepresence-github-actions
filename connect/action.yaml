@@ -1,7 +1,7 @@
 name: 'Telepresence Connect'
 description: 'Telepresence connects to a remote cluster'
 inputs:
-  client_values_file:
+  telepresence_config_file:
     description: Path to the Telepresence client configuration values file
     required: false
 runs:
