@@ -39,6 +39,7 @@ const unixInstall = async  (version) => {
 };
 
 exports.telepresenceInstall = async () => {
+    const version = core.getInput('version');
     let configFileSha = '00000';
     try {
         configFileSha = await configure.checksumConfigFile('sha1');
@@ -50,7 +51,6 @@ exports.telepresenceInstall = async () => {
 
 
     try {
-        const version = core.getInput('version');
         switch (process.platform) {
             case "win32":
                 return await windowsInstall(version);
