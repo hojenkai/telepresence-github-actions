@@ -5,6 +5,10 @@ inputs:
     description: The version of telepresence to use
     required: false
     default: latest
+  telepresence_config_file:
+    description: Path to the Telepresence client configuration values file
+    required: false
 runs:
   using: 'node16'
   main: 'configure.js'
+

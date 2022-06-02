@@ -4,11 +4,6 @@ The telepresence connect action allows users to perform a `telepresence connect`
 
 It's a good practice for users to store their KUBECONFIG yaml file as a Github Actions secret so that the contents are encrypted and masked out in the workflow's logs.
 
-## Inputs
-| name | required | default value | description |
-| ----- | -------- | ----- | ----- |
-| telepresence_config_file | no  | | Path to the file that contains Telepresence client configuration values. See [this page](https://www.getambassador.io/docs/telepresence/latest/reference/config/) for more information. |
-
 ## Post action
 
 The telepresence connect action includes a post action script that ends the connection when the job finishes.
