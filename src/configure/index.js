@@ -4,6 +4,20 @@ const io = require('@actions/io');
 const cache = require('@actions/cache');
 const fs = require('fs');
 
+exports.fileExists = async function(filePath) {
+    try {
+        const stats = await fs.promises.stat(filePath);
+        if (!stats.isFile()) {
+            throw new Error('client_values_file must be a file.');
+        }
+        return true;
+    } catch(err) {
+        if (err.code === 'ENOENT') {
+            return false;
+        }
+        throw err;
+    }
+}
 
 exports.getTelepresenceConfigPath = () => {
     switch (process.platform) {
@@ -41,7 +55,7 @@ exports.getConfiguration = async () => {
 exports.createClientConfigFile = async function() {
     let fileExists = false;
     try {
-        fileExists = await fileExists(this.TELEPRESENCE_CONFIG_FILE_PATH);
+        fileExists = await this.fileExists(this.TELEPRESENCE_CONFIG_FILE_PATH);
     } catch(err) {
         core.warning('Error accessing telepresence config file. ' + err);
         return;
@@ -67,21 +81,6 @@ exports.checksumConfigFile = function (algorithm) {
         resolve(hash.read());
       });
   });
-}
-
-const fileExists = async function(filePath) {
-    try {
-        const stats = await fs.promises.stat(filePath);
-        if (!stats.isFile()) {
-            throw new Error('client_values_file must be a file.');
-        }
-        return true;
-    } catch(err) {
-        if (err.code === 'ENOENT') {
-            return false;
-        }
-        throw err;
-    }
 }
 
 exports.TELEPRESENCE_ID_STATE = 'telepresence-id-state';
