@@ -6,11 +6,10 @@ const installTelepresence = require('../src/install');
 const cache = require('@actions/cache');
 
 const telepresenceConfiguring = async function () {
-    const isInstalled = await installTelepresence.telepresenceInstall();
-    if(!isInstalled)
+    const telepresenceCacheKey  = await installTelepresence.telepresenceInstall();
+    if(!telepresenceCacheKey)
         return;
 
-    const telepresenceCacheKey = core.getState('TELEPRESENCE_CACHE_KEY');
     core.info('from action ' + telepresenceCacheKey)
 
     const path = configure.getTelepresenceConfigPath();

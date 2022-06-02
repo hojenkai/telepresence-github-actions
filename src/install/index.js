@@ -54,16 +54,17 @@ exports.telepresenceInstall = async () => {
     try {
         switch (process.platform) {
             case "win32":
-                return await windowsInstall(version);
+                return await windowsInstall(version) && telepresenceCacheKey;
             case "linux":
             case "darwin":
-                return await unixInstall(version);
+                return await unixInstall(version) && telepresenceCacheKey;
             default:
                 core.setFailed("Invalid runner platform");
-                return false;
+                return undefined;
         }
     } catch (error) {
         core.setFailed(error.message);
+        return undefined;
     }
 };
 

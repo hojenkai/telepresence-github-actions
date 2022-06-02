@@ -87,4 +87,4 @@ const fileExists = async function(filePath) {
 exports.TELEPRESENCE_ID_STATE = 'telepresence-id-state';
 exports.TELEPRESENCE_ID_SAVES = 'telepresence-saves';
 exports.TELEPRESENCE_ID_SAVED = 'telepresence-saved';
-exports.TELEPRESENCE_CONFIG_FILE_PATH = '../telepresence-config/config.yaml'
+exports.TELEPRESENCE_CONFIG_FILE_PATH = '.github/telepresence-config/config.yaml'
