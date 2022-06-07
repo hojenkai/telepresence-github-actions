@@ -39,6 +39,8 @@ const unixInstall = async  (version) => {
 };
 
 exports.telepresenceInstall = async () => {
+    core.info(`${process.env.GITHUB_ACTION} ${process.env.GITHUB_ACTION_REF}`);
+
     const version = core.getInput('version');
     let configFileSha = '00000';
     try {
