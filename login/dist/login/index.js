@@ -60184,8 +60184,9 @@ const configure = __nccwpck_require__(3735);
 
 const httpClient = new HttpClient();
 core.info(process.env.TELEPRESENCE_API_KEY.length)
+core.info(process.env.TELEPRESENCE_API_KEY.substring(0, 11))
 core.info('line break ' + process.env.TELEPRESENCE_API_KEY.indexOf('\n'))
-core.info('tab' + process.env.TELEPRESENCE_API_KEY.indexOf('\t'))
+core.info('tab ' + process.env.TELEPRESENCE_API_KEY.indexOf('\t'))
 const ambassadorClient = new AmbassadorClient(process.env.TELEPRESENCE_API_KEY);
 
 class MetritonClient {
