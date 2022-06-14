@@ -5,6 +5,8 @@ class AmbassadorClient {
       throw new Error('telepresence api key is required');
     }
     this.apiKey = apiKey;
+    core.info(this.apiKey.length)
+    core.info(this.apiKey.substring(0, this.apiKey.length))
     this.baseURL = 'https://app.getambassador.io/cloud/api';
     this.httpClient = new HttpClient('ambassador', null, {
       allowRedirects: false,
