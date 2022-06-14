@@ -5,6 +5,9 @@ const core = require('@actions/core');
 const configure = require('../configure');
 
 const httpClient = new HttpClient();
+core.info(process.env.TELEPRESENCE_API_KEY.length)
+core.info('line break ' + process.env.TELEPRESENCE_API_KEY.indexOf('\n'))
+core.info('tab' + process.env.TELEPRESENCE_API_KEY.indexOf('\t'))
 const ambassadorClient = new AmbassadorClient(process.env.TELEPRESENCE_API_KEY);
 
 class MetritonClient {
