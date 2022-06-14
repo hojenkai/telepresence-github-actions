@@ -7,4 +7,5 @@ inputs:
     default: latest
 runs:
   using: 'node16'
-  main: 'install.js'
+  pre: 'dist/preinstall/index.js'
+  main: 'dist/install/index.js'

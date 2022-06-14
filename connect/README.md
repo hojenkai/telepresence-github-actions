@@ -2,7 +2,7 @@
 
 The telepresence connect action allows users to perform a `telepresence connect` command. It requires a `$KUBECONFIG` env var to point to a valid Kubernetes configuration file that contains information to connect to a remote cluster or a config file in `$HOME/.kube` as that's how `kubectl` searches for the information it needs to choose a cluster and communicate with the API server of a cluster. See [Organizing cluster access using kubeconfig files](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/).
 
-It's a good practice for users to store their KUBECONFIG yaml file as a Github Actions secret so that the contents are encrypted and masked out in the workflow's logs.
+It's a good practice for users to store their KUBECONFIG yaml files as a Github Actions secret so that the contents are encrypted and masked out in the workflow's logs.
 
 ## Post action
 
@@ -37,7 +37,7 @@ jobs:
 
       # Connect to a remote Kubernetes cluster
       - name: Connect to remote cluster
-        uses: datawire/telepresence-actions/connect@v0.3
+        uses: datawire/telepresence-actions/connect@v1.0
 
       # Other steps ...
 ```
